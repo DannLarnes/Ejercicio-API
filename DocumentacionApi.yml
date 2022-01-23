@@ -1,0 +1,108 @@
+openapi: 3.0.0
+servers:
+  - url: 'localhost:8080'
+    description: Server local
+info:
+  description: >-
+    Api de ejercicio en la que se desarrollo una simulacion de login y un
+    buscador de coordenadas de provincias consumiendo la api de datos.gov.ar
+  version: 1.0.0
+  title: Ejercicio API
+  contact:
+    email: matiasegarcia96@gmail.com
+tags:
+  - name: usuario
+    description: login de usuario
+  - name: coordenadas
+    description: Coordenadas provincia
+paths:
+  /coordenadas:
+    get:
+      tags:
+        - coordenadas
+      summary: busca coordenadas de provincias argentinas
+      description: |
+        Se buscan las coordenadas de la provincia pasada por parametro
+      parameters:
+        - in: query
+          name: provincia
+          description: la provincia de la que se quiere buscar las coordenadas
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Coordenadas recibidas por el servicio
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Coordenadas'
+        '400':
+          description: bad input parameter, no se ingreso una provincia
+        '404':
+          description: provincia no encontrada
+  /login:
+    post:
+      tags:
+        - usuario
+      summary: Intenta iniciar sesion con un usuario
+      description: Se envia nombre de usuario y contraseña para iniciar secion
+      responses:
+        '200':
+          description: Usuario ingresa correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "Usuario valido"
+        '401':
+          description: Usuario no existe o contraseña invalida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "Usuario o contraseña invalidos"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+        description: Usuario a ingresar
+components:
+  schemas:
+    Coordenadas:
+      type: object
+      required:
+        - lat
+        - lon
+      properties:
+        lat:
+          type: number
+          example: -27.3358332810217
+        lon:
+          type: number
+          example: -27.3358332810217
+    Usuario:
+      type: object
+      required:
+        - nombre
+        - password
+      properties:
+        nombre:
+          type: string
+          example: Matias
+        password:
+          type: string
+          example: 123Probando
+    UsuarioStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          example:  "Usuario valido"
