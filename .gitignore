@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 /rest-service/.mvn
+/rest-service/*.log
