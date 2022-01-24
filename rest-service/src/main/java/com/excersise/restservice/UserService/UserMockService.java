@@ -14,7 +14,8 @@ public class UserMockService implements UserService{
     private String validPassword;
 
     public Boolean validateUser(Usuario user){
-        return user.getNombre().equals(validUser) && user.getPassword().equals(validPassword);
+        return (user.getNombre()!=null && user.getNombre().equals(validUser)) &&
+                (user.getPassword()!=null && user.getPassword().equals(validPassword));
     }
 
 

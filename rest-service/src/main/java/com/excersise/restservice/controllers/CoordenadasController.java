@@ -6,11 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class CoordenadasController {
     private static final Logger logger = LoggerFactory.getLogger(CoordenadasController.class);
@@ -18,6 +19,7 @@ public class CoordenadasController {
     @Autowired
     private ProvinciasService provinciasService;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/coordenadas")
     public Coordenadas obtenerCoordenadasProvincia(@RequestParam("provincia") String nombreProvincia){
         logger.info("Buscando coordenadas de provincia"+nombreProvincia);
